@@ -9,7 +9,8 @@ function! _EscapeText_python(text)
     let dedented_lines = substitute(no_empty_lines, dedent_pat, "", "g")
     let except_pat = '\(elif\|else\|except\|finally\)\@!'
     let add_eol_pat = '\n\s[^\n]\+\n\zs\ze\('.except_pat.'\S\|$\)'
-    return substitute(dedented_lines, add_eol_pat, "\n", "g")
+    let dedented_lines = substitute(dedented_lines, '\n', "OB", "g")
+    return substitute(dedented_lines, add_eol_pat, "\n", "g") . "\n"
   end
 endfunction
 
